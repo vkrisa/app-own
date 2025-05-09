@@ -8,4 +8,4 @@ COPY .env ./
 RUN npm run build
 EXPOSE 3002
 
-CMD ["npm", "run", "start:prod"]
+CMD ["sh", "-c", "npm run db:deploy && npm run start:prod"]

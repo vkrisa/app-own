@@ -3,12 +3,8 @@ import { UserModule } from './user.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
-  const app = await NestFactory.create(UserModule);
-
   const RABBITMQ_URL = process.env.RABBITMQ_URL as string;
-
-  app.enableCors();
-
+  const app = await NestFactory.create(UserModule);
   await app.listen(3002);
 
   const microservice = app.connectMicroservice<MicroserviceOptions>({
