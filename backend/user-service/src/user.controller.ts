@@ -7,13 +7,22 @@ import { User } from '@prisma/client';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @MessagePattern({ cmd: 'get_users' })
+  @MessagePattern({ cmd: 'user.get_users' })
   async getUsers(): Promise<User[]> {
     return await this.userService.getUsers({});
   }
 
-  @MessagePattern({ cmd: 'delete_user' })
+  @MessagePattern({ cmd: 'user.get_user_by_email' })
+  async getUserByEmail(
+    @Payload() data: { email: string },
+  ): Promise<User | null> {
+    const { email } = data;
+    return await this.userService.getUserByEmail(email);
+  }
+
+  @MessagePattern({ cmd: 'user.delete_user' })
   async deleteUser(@Payload() data: { id: string }) {
-    return await this.userService.deleteUser(data.id);
+    const { id } = data;
+    return await this.userService.deleteUser(id);
   }
 }

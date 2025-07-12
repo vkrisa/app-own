@@ -10,6 +10,10 @@ export class UserService {
     return this.prisma.user.findMany({ skip: params.skip, take: params.take });
   }
 
+  async getUserByEmail(email: string): Promise<User | null> {
+    return this.prisma.user.findUnique({ where: { email } });
+  }
+
   async deleteUser(id: string) {
     return this.prisma.user.delete({ where: { id } });
   }

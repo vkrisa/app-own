@@ -18,19 +18,6 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
           },
         }),
       },
-      {
-        name: 'AUTH_SERVICE',
-        imports: [ConfigModule],
-        inject: [ConfigService],
-        useFactory: (configService: ConfigService) => ({
-          transport: Transport.RMQ,
-          options: {
-            urls: [configService.get<string>('RABBITMQ_URL') || ''],
-            queue: 'auth-queue',
-            queueOptions: { durable: false },
-          },
-        }),
-      },
     ]),
   ],
   exports: [ClientsModule],

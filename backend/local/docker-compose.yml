@@ -25,6 +25,11 @@ services:
     depends_on:
       - rabbitmq
 
+  auth-service:
+    build: ../auth-service
+    depends_on:
+      - rabbitmq
+
   user-db:
     image: postgres
     container_name: user-db

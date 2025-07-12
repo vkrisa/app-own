@@ -5,15 +5,21 @@ import { ClientProxy } from '@nestjs/microservices';
 export class AppController {
   constructor(
     @Inject('USER_SERVICE') private readonly userClient: ClientProxy,
+    @Inject('AUTH_SERVICE') private readonly authClient: ClientProxy,
   ) {}
+
+  @Get('signin')
+  signIn() {
+    return this.authClient.send({ cmd: 'auth.login' }, {});
+  }
 
   @Get('users')
   getUsers() {
-    return this.userClient.send({ cmd: 'get_users' }, {});
+    return this.userClient.send({ cmd: 'user.get_users' }, {});
   }
 
   @Delete('user/:id')
   deleteUser(@Param('id') id: string) {
-    return this.userClient.send({ cmd: 'delete_user' }, { id });
+    return this.userClient.send({ cmd: 'user.delete_user' }, { id });
   }
 }
